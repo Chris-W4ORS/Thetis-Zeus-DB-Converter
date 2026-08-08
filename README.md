@@ -58,13 +58,13 @@ phase rotator, TX filter cutoffs, and mic gain.
 4. Preview what will be converted (writes nothing):
 
    ```powershell
-   pwsh -ExecutionPolicy Bypass -File .\Convert-ThetisToZeus.ps1 -WhatIf
+   pwsh -ExecutionPolicy Bypass -File .\scripts\Convert-ThetisToZeus.ps1 -WhatIf
    ```
 
 5. Run it for real:
 
    ```powershell
-   pwsh -ExecutionPolicy Bypass -File .\Convert-ThetisToZeus.ps1
+   pwsh -ExecutionPolicy Bypass -File .\scripts\Convert-ThetisToZeus.ps1
    ```
 
    - Enter profile numbers (comma-separated) or `A` for all.
@@ -73,7 +73,7 @@ phase rotator, TX filter cutoffs, and mic gain.
 6. **Verify** (this is the important step — don't skip it):
 
    ```powershell
-   pwsh -ExecutionPolicy Bypass -File .\Compare-ThetisZeus.ps1
+   pwsh -ExecutionPolicy Bypass -File .\scripts\Compare-ThetisZeus.ps1
    ```
 
    You want the summary to read **MISMATCH: 0, MISSING: 0**. Any `EXTRA` entries
@@ -84,11 +84,30 @@ phase rotator, TX filter cutoffs, and mic gain.
 > pushed to the live engine, then snapshotted — that's how Zeus's Save works). It
 > re-applies your chosen active profile at the end. **Don't transmit while it runs.**
 
+### Easier: double-click launchers
+
+If you'd rather not type commands, use the included launchers instead of the
+`pwsh ...` commands above:
+
+- **`Convert-ThetisToZeus.bat`** — runs the converter
+- **`Compare-ThetisZeus.bat`** — runs the verification
+
+They bypass the PowerShell execution-policy prompt automatically, and they find
+the scripts whether they're in the `scripts\` folder or sitting right beside the
+`.bat`. After downloading, unblock the files once so Windows doesn't warn on them:
+
+```powershell
+Get-ChildItem -Recurse | Unblock-File
+```
+
+(Or, if you see a SmartScreen prompt when double-clicking, click
+**More info → Run anyway**.)
+
 ### Non-interactive use
 
 ```powershell
 # Convert everything and set a specific profile active, no prompts:
-pwsh -ExecutionPolicy Bypass -File .\Convert-ThetisToZeus.ps1 -All -SetActiveName "VMP 3k Voodoo"
+pwsh -ExecutionPolicy Bypass -File .\scripts\Convert-ThetisToZeus.ps1 -All -SetActiveName "VMP 3k Voodoo"
 ```
 
 ---
@@ -146,6 +165,8 @@ Ports are discovered automatically at runtime (Zeus assigns them dynamically).
   Zeus if the dropdown looks stale.
 - **Comparison shows filter mismatches only** — make sure you're on the current
   version of the converter (older ones didn't set the TX filter).
+- **`.bat` launcher can't find the script** — keep the files together as
+  downloaded; the launcher looks in `scripts\` and then next to itself.
 
 ---
 
@@ -153,8 +174,10 @@ Ports are discovered automatically at runtime (Zeus assigns them dynamically).
 
 | File | Purpose |
 |------|---------|
-| `Convert-ThetisToZeus.ps1` | The converter |
-| `Compare-ThetisZeus.ps1`   | Independent verification of the conversion |
+| `Convert-ThetisToZeus.bat` | Double-click launcher for the converter |
+| `Compare-ThetisZeus.bat`   | Double-click launcher for the verification |
+| `scripts/Convert-ThetisToZeus.ps1` | The converter |
+| `scripts/Compare-ThetisZeus.ps1`   | Independent verification of the conversion |
 
 ---
 
