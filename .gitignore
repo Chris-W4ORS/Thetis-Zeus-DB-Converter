@@ -1,0 +1,6 @@
+*.zip
+ZeusSync/
+*.log
+Discovery/
+Thumbs.db
+Desktop.ini
